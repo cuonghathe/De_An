@@ -1,0 +1,204 @@
+.form{
+    width: 100%;
+}
+
+section .form_data form .form_input input {
+    margin-top: 15px;
+
+}
+
+
+
+section .form_data form .btn-danger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 7%;
+    height: 100%;
+    padding: 10px 5px;
+    background-color: #de0404;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-top: 0px;
+    transition: all 0.3s;
+}
+.create_recipe_body{
+    width: 100%;
+    height: 100;
+    background-image: url('bgcreate.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.form_container {
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.form_data {
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+
+}
+
+.summit_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 35px 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.form {
+    width: 100%;
+    padding: 10px 50px;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form_input_instructions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 10px;
+
+
+    label {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 10px;
+        background-color: #4299e1;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+        margin-top: 10px;
+        transition: all 0.3s;
+
+        &:hover {
+            background-color: #2b6cb0;
+        }
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d4d0d0;
+            border-radius: 5px;
+            outline: none;
+            font-size: 14px;
+
+            &::placeholder {
+                color: #8694a8;
+                letter-spacing: 0.5px;
+                font-size: 14px;
+            }
+
+            &:focus {
+                border: 2px solid rgba(66, 153, 225, 0.6);
+            }
+        }
+    }
+}
+
+.form_input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 10px;
+
+    label {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 10px;
+        background-color: #4299e1;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+        margin-top: 10px;
+        transition: all 0.3s;
+
+        &:hover {
+            background-color: #2b6cb0;
+        }
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        input {
+            flex: 1;
+            padding: 11px;
+            border: 1px solid #d4d0d0;
+            border-radius: 5px;
+            outline: none;
+            margin-right: 10px;
+            font-size: 14px;
+
+            &::placeholder {
+                color: #8694a8;
+                letter-spacing: 0.5px;
+                font-size: 14px;
+            }
+
+            &:focus {
+                border: 2px solid rgba(66, 153, 225, 0.6);
+            }
+        }
+
+        select {
+            width: 100px;
+            padding: 11px;
+            border: 1px solid #d4d0d0;
+            border-radius: 5px;
+            outline: none;
+            font-size: 14px;
+            margin-top: 0px;
+
+            &:focus {
+                border: 2px solid rgba(66, 153, 225, 0.6);
+            }
+        }
+    }
+}

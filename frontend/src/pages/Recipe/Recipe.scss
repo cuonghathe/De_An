@@ -1,0 +1,186 @@
+.recipe-container {
+  padding: 15px 35px 15px 35px;
+  margin-top: 25px;
+  background-color: #ffffff;
+  margin-bottom: 0;
+}
+
+.recipe-header-details-container {
+  display: flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding: 10px;
+}
+
+.navBtn{
+  margin-left: 10px;
+  background-color: #ea9c00;
+  border-color: #ea9c00;
+}
+
+.recipe-header {
+  text-align: left;
+}
+
+.recipe-title {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.recipe-rating {
+  margin-top: 1rem;
+}
+
+.recipe-author {
+  margin-top: 1rem;
+}
+
+.recipe-image-container {
+  margin-top: 30px;
+  
+}
+
+.recipe-image-card {
+  max-width: 30rem;
+  border: none;
+}
+
+.mb-4 {
+  margin-top: 2px;
+  margin-bottom: 0;
+  font-weight: 400;
+  font-size: 17px;
+}
+
+.card-title {
+  margin-top: 10px;
+}
+.form-check {
+  margin-top: 0.5rem;
+  font-size: 18px;
+}
+
+.checked {
+  opacity: 0.5;
+  font-size: 16px;
+}
+
+.user-details{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 30px;
+  width: 50%;
+}
+
+.recipe-details {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 30px;
+  width: 50%;
+}
+
+
+.servings-display {
+  margin: 0 1rem;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+}
+
+
+.recipe-info {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.recipe-info-card {
+  max-width: 35rem;
+  border: none;
+}
+
+.recipe-ingredients-instructions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ingredients-card,
+.instructions-card {
+  max-width: stretch;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.review {
+  padding-bottom: 2px;
+}
+
+.btn-link{
+  padding: 0;
+  margin-bottom: 6px;
+  margin-left: 3px;
+  color: black;
+  text-decoration: none;
+
+}
+
+.user_review mt-4 {
+
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+}
+
+.stars{
+  color: #ffee00; 
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.star{
+  color: #ffd000; 
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.info_box{
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  margin-bottom: -10px;
+}
+
+.Date{
+  opacity: 50%;
+  font-size: 12px;
+}
+
+.rating{
+  width: 10%;
+}
+
+
+.help {
+  width: 320px;
+  position: fixed;
+  top: 100px;
+  right: 0px;
+  background: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.instruction{
+  margin-bottom: 2px;
+}
