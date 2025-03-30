@@ -13,7 +13,6 @@ import UserTemplate from './components/user_template';
 import UserList from './pages/Admin/Userlist/userlist';
 import AdminRecipeDetails from './pages/Admin/admin_recipe'
 import AdminSearchResults from './components/admin_searchResult'
-import Scrolling from './api/voiceControl/scrolling'
 import UserProfile from './pages/User_profile/userProfile'
 
 const PrivateRoute = ({ children }) => {
@@ -32,7 +31,6 @@ const PrivateRoute = ({ children }) => {
 function App() {
   return (
     <BrowserRouter>
-      <Scrolling />
       <Routes>
         <Route path="/" element={<UserTemplate />}>
           <Route index element={<Dashboard />} />

@@ -233,6 +233,7 @@ const RecipeDetails = () => {
                         <Form.Label>Bình luận</Form.Label>
                         <Form.Control
                             as="textarea"
+                            readOnly
                             rows={3}
                             value={newReview.description}
                             onChange={(e) => setNewReview({ ...newReview, description: e.target.value })}

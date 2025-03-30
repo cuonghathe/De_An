@@ -178,13 +178,15 @@ export const getAllUsers = async (req, res) => {
 
 // Xoa nguoi dung
 export const deleteUser = async (req, res) => {
-  const { userid } = req.params;
+  const { userId } = req.params;
   try {
-    const deletedUser = await userDB.findByIdAndDelete(userid);
+    const deletedUser = await userDB.findByIdAndDelete(userId);
     if (!deletedUser) {
       return res.status(404).json({ error: "User not found" });
     }
+    await reviewDB.deleteMany({ user: userId });
     res.status(200).json({ message: "User deleted successfully" });
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

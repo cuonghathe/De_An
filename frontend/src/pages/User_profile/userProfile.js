@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Container from "react-bootstrap/Container";
 import Card from 'react-bootstrap/Card';
@@ -13,6 +13,7 @@ const UserProfile = () => {
     const [user, setUser] = useState(null);
     const [recipes, setRecipes] = useState([]);
     const [reviews, setReviews] = useState([]);
+    const navigate = useNavigate();
     const token = localStorage.getItem("authToken");
 
 
@@ -47,10 +48,27 @@ const UserProfile = () => {
 
 
 
+
+
         fetchUserData();
         fetchUserRecipes();
         fetchUserReviews();
     }, [userId]);
+
+
+    const handleDeleteUser = async (userId) => {
+        if (!window.confirm("Bạn có chắc chắn muốn xóa tài khoản?")) return;
+
+        try {
+            await axios.delete(`http://localhost:5000/user/api/delprofile/${userId}`, {
+            });
+            localStorage.removeItem('authToken');
+            navigate('/');
+
+        } catch (error) {
+            console.error('Fuck!:', error);
+        }
+    };
 
     const handleDeleteRecipe = async (recipeId) => {
         if (!window.confirm("Bạn có chắc chắn muốn xóa công thức này?")) return;
@@ -82,7 +100,6 @@ const UserProfile = () => {
 
 
 
-
     if (!user) {
         return <div>Đang tải...</div>;
     }
@@ -101,20 +118,27 @@ const UserProfile = () => {
                         <h1 className="recipe-title">{ }</h1>
                         <div className="recipe-image-container">
                             <Card className='recipe-image-card'>
-                                <Card.Img variant="top" src={user.userprofile || '/logo192.png'} />
+                                <Card.Img variant="top" src={user.userprofile || '/dragondancing_1200x1200.jpg'} />
                             </Card>
                         </div>
                     </div>
                 </div>
                 <div className="user-details">
-                    <h4 className="recipe-author">Username: <span className='review'>{user.username}</span></h4>
+
+                    <h4 className="recipe-author">
+                        Username: <span className='review'>{user.username}</span>
+
+                    </h4>
                     <Card.Title>Email: <span className="mb-4">{user.email}</span></Card.Title>
                     <Card.Title>Thời gian tạo tài khoản: <span className="mb-4">{new Date(user.createdAt).toLocaleDateString()}</span></Card.Title>
                     <Card.Title>Điểm trung bình:<span className="star"> {calculateAverageRating()}★</span> </Card.Title>
                     <Card.Title>Số bài đăng:<span className="mb-4"> {recipes.length}</span> </Card.Title>
                     <Card.Title>Số đánh giá:<span className="mb-4"> {reviews.length}</span> </Card.Title>
-                    <Card.Title>Số lần đăng nhập:<span className="mb-4"> {user.tokens.length}</span> </Card.Title>
-
+                    <Card.Title>Số lần đăng nhập:<span className="mb-4"> {user.tokens.length}</span>
+                    <div className='recipe-ingredients-instructions'style={{marginLeft:"600px"}}>
+                        <Button variant="danger" onClick={() => handleDeleteUser(user._id)} >Xóa</Button>
+                        <Button variant="success" >Sửa</Button>
+                    </div></Card.Title>
                 </div>
             </div>
 
@@ -132,8 +156,8 @@ const UserProfile = () => {
                                                 <p>Ngày tạo: <span className="mb-4">{new Date(recipe.createdAt).toLocaleDateString()}   </span></p>
                                             </h5>
                                             <div className="recipe-ingredients-instructions">
-                                                <Button variant="success" size='sm'  href={`/recipe/${recipe._id}`}>Xem</Button>
-                                                <Button variant="danger" size='sm' onClick={handleDeleteRecipe} >Xóa!</Button>
+                                                <Button variant="success" size='sm' href={`/recipe/${recipe._id}`}>Xem</Button>
+                                                <Button variant="danger" size='sm' onClick={() => handleDeleteRecipe(recipe._id)} >Xóa!</Button>
                                             </div>
                                         </div>
                                     </Card.Body>

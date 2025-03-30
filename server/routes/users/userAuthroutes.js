@@ -24,6 +24,8 @@ router.post("/forgotpassword",userAuthController.forgotpassword);
 router.get("/getuserrecipe/:userId", userAuthController.getUserRecipe);
 router.get("/getuserreview/:userId", userAuthController.getUserReview);
 router.get("/profile/:userId", userAuthController.getUser);
+router.delete("/delprofile/:userId", userAuthController.deleteUser);
+
 
 
 
