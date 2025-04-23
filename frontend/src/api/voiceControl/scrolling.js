@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { stopTTS } from "./TTS";
 
-const Scrolling = ({ scrollToInstructions, scrollToReviews, scrollToIngredients, handleAddServing, handleRemoveServing, changeOpacity }) => {
+const Scrolling = ({ scrollToInstructions, scrollToReviews, scrollToIngredients, handleAddServing, handleRemoveServing, changeOpacity, handleSpeakIngredients }) => {
   const [, setCommandLog] = useState([]);
   const [lastExecuted, setLastExecuted] = useState(0);
 
@@ -86,6 +87,15 @@ const Scrolling = ({ scrollToInstructions, scrollToReviews, scrollToIngredients,
           changeOpacity();
         }
 
+        else if (command === "đọc") {
+          handleSpeakIngredients();
+        }
+
+        else if (command === "dừng" || command === "rừng") {
+          stopTTS();
+        }
+
+
         setLastExecuted(currentTime);
       }
     };
@@ -98,7 +108,7 @@ const Scrolling = ({ scrollToInstructions, scrollToReviews, scrollToIngredients,
       console.error("Lỗi khi khởi động SpeechRecognition:", error);
     }
 
-  }, [lastExecuted, scrollToInstructions, scrollToReviews, scrollToIngredients, handleAddServing, handleRemoveServing, changeOpacity]);
+  }, [lastExecuted, scrollToInstructions, scrollToReviews, scrollToIngredients, handleAddServing, handleRemoveServing, changeOpacity, handleSpeakIngredients]);
 
 
 

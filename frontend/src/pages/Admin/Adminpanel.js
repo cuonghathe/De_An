@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ListGroup, Container, Form, Nav } from "react-bootstrap";
+import { ListGroup, Container, Form, Nav, Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import '../../layouts/header.scss'
 
@@ -92,12 +92,17 @@ const RecipeList = () => {
               <small className="ms-2"> |   {new Date(recipe.createdAt).toLocaleDateString()} | review: {recipe.reviewCount} | Điểm: {recipe.averageRating} | Tác giả: {recipe.userData[0].username} |</small>
             </span>
             <div>
-              <button className="btn btn-success btn-sm me-2" onClick={() => handleNavigateRecipe(recipe._id)}>
+              <Button className="btn btn-success btn-sm me-2" onClick={() => handleNavigateRecipe(recipe._id)}>
                 Xem
-              </button>
-              <button className="btn btn-danger btn-sm" onClick={() => handleDeleteRecipe(recipe._id)}>
+              </Button>
+              <Button variant="warning" size='sm' onClick={() => navigate(`/updaterecipe/${recipe._id}`)} >
+                Sửa
+              </Button>
+              <Button className="btn btn-danger btn-sm" onClick={() => handleDeleteRecipe(recipe._id)}>
                 Xóa
-              </button>
+              </Button>
+              
+
             </div>
           </ListGroup.Item>
         ))}

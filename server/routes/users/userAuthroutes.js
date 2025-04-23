@@ -25,10 +25,8 @@ router.get("/getuserrecipe/:userId", userAuthController.getUserRecipe);
 router.get("/getuserreview/:userId", userAuthController.getUserReview);
 router.get("/profile/:userId", userAuthController.getUser);
 router.delete("/delprofile/:userId", userAuthController.deleteUser);
-
-
-
-
+router.put("/updateprofile/:userId", userUpload.single("userprofile"), userAuthController.updateUser);
+router.get("/alluserstats", userAuthController.getUserRecipeStats);
 
 
 // xác minh người dùng

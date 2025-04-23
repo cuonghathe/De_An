@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import axios from 'axios';
 import Container from "react-bootstrap/Container";
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import "../Recipe/Recipe.scss";
-import { CardTitle } from 'react-bootstrap';
 
-const UserProfile = () => {
+const UserProfilePublic = () => {
     const { userId } = useParams();
     const [user, setUser] = useState(null);
     const [recipes, setRecipes] = useState([]);
     const [reviews, setReviews] = useState([]);
-    const navigate = useNavigate();
-    const token = localStorage.getItem("authToken");
 
 
 
@@ -47,55 +44,10 @@ const UserProfile = () => {
         };
 
 
-
-
-
         fetchUserData();
         fetchUserRecipes();
         fetchUserReviews();
     }, [userId]);
-
-
-    const handleDeleteUser = async (userId) => {
-        if (!window.confirm("Bạn có chắc chắn muốn xóa tài khoản?")) return;
-
-        try {
-            await axios.delete(`http://localhost:5000/user/api/delprofile/${userId}`, {
-            });
-            localStorage.removeItem('authToken');
-            navigate('/');
-
-        } catch (error) {
-            console.error('Fuck!:', error);
-        }
-    };
-
-    const handleDeleteRecipe = async (recipeId) => {
-        if (!window.confirm("Bạn có chắc chắn muốn xóa công thức này?")) return;
-
-        try {
-            const token = localStorage.getItem("authToken");
-            await axios.delete(`http://localhost:5000/recipe/api/delete/${recipeId}`, {
-                headers: { Authorization: `${token}` },
-            });
-            setRecipes((prevRecipes) => prevRecipes.filter((recipe) => recipe._id !== recipeId));
-        } catch (error) {
-            console.error('Failed to delete:', error);
-        }
-    };
-
-    const handleDeleteReview = async (reviewId) => {
-        if (!window.confirm("Bạn có chắc chắn muốn xóa review này?")) return;
-
-        try {
-            await axios.delete(`http://localhost:5000/review/api/deletereview/${reviewId}`, {
-                headers: { Authorization: `${token}` },
-            });
-            setReviews(reviews.filter(review => review._id !== reviewId));
-        } catch (error) {
-            console.error('Failed to delete:', error);
-        }
-    };
 
 
 
@@ -123,16 +75,10 @@ const UserProfile = () => {
                         Username: <span className='review'>{user.username}</span>
 
                     </h4>
-                    <Card.Title>Email: <span className="mb-4">{user.email}</span></Card.Title>
                     <Card.Title>Thời gian tạo tài khoản: <span className="mb-4">{new Date(user.createdAt).toLocaleDateString()}</span></Card.Title>
                     <Card.Title>Điểm trung bình:<span className="star"> {user.averageRatingAcrossRecipes}★</span> </Card.Title>
                     <Card.Title>Số bài đăng:<span className="mb-4"> {user.totalRecipes}</span> </Card.Title>
                     <Card.Title>Số đánh giá:<span className="mb-4"> {reviews.length}</span> </Card.Title>
-                    <Card.Title>Số lần đăng nhập:<span className="mb-4"> {user.tokens.length}</span>
-                    <div className='recipe-ingredients-instructions'style={{marginLeft:"600px"}}>
-                        <Button variant="danger" onClick={() => handleDeleteUser(user._id)} >Xóa</Button>
-                        <Button variant="warning" onClick={() => navigate(`/updateprofile/${userId}`)}>Sửa</Button>
-                    </div></Card.Title>
                 </div>
             </div>
 
@@ -151,8 +97,6 @@ const UserProfile = () => {
                                             </h5>
                                             <div className="recipe-ingredients-instructions">
                                                 <Button variant="success" size='sm' href={`/recipe/${recipe._id}`}>Xem</Button>
-                                                <Button variant="warning" size='sm' onClick={() => navigate(`/updaterecipe/${recipe._id}`)} >Sửa!</Button>
-                                                <Button variant="danger" size='sm' onClick={() => handleDeleteRecipe(recipe._id)} >Xóa!</Button>
                                             </div>
                                         </div>
                                     </Card.Body>
@@ -165,44 +109,8 @@ const UserProfile = () => {
 
             </div>
 
-
-
-            <div className="reviewdetails mt-4">
-                <h2>Reviews ({reviews.length})</h2>
-                <div className="user_review mt-4">
-                    {reviews.map((review) => (
-                        <Card key={review._id} className="mb-3">
-                            <Card.Body>
-                                <div className="info_box">
-                                    <h5>{review.username}
-                                        <span className="stars">
-                                            {"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}
-                                        </span>
-                                        <div>
-                                            <small className="Date">{new Date(review.createdAt).toLocaleDateString()}</small>
-                                        </div>
-                                    </h5>
-
-                                    <div className="recipe-ingredients-instructions">
-                                        <Button variant="success" size='sm' href={`/recipe/${review.recipeid}`}>Xem</Button>
-                                        <Button variant="danger" size='sm' onClick={() => handleDeleteReview(review._id)}>Xóa!</Button>
-                                    </div>
-                                </div>
-
-
-
-                                <p className="mt-2">{review.description}</p>
-
-                                <CardTitle>Công thức đánh giá: <span className="mb-4">{review.recipename}</span></CardTitle>
-
-                            </Card.Body>
-                        </Card>
-                    ))}
-                </div>
-            </div>
-
         </Container>
     );
 };
 
-export default UserProfile;
+export default UserProfilePublic;

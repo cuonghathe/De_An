@@ -6,7 +6,7 @@ import recipeAuthController from '../../controllers/recipes/recipeController.js'
 const router = new express.Router();
 
 
-router.get('/users', adminAuthenticate, userAuthController.getAllUsers);
+router.get('/users', adminAuthenticate, userAuthController.getUserRecipeStats);
 router.delete('/user/:userid', adminAuthenticate, userAuthController.deleteUser);
 router.delete('/recipe/:recipeid', adminAuthenticate, recipeAuthController.deleteRecipe);
 

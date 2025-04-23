@@ -19,6 +19,9 @@ const Header = () => {
         navigate(`/userprofile/${userId}`);
     }
 
+
+
+
     const handleSearch = async (e) => {
         e.preventDefault();
 
@@ -48,6 +51,8 @@ const Header = () => {
                         <Nav className="me-auto">
                             <Nav.Link as={NavLink} to="/">Home</Nav.Link>
                             <Nav.Link as={NavLink} to="/Recipe/Create">Tạo công thức</Nav.Link>
+                            <Nav.Link as={NavLink} to="recipes/leaderboard">Bảng xếp hạng công thức</Nav.Link>
+                            <Nav.Link as={NavLink} to="/users/leaderboard">Bảng xếp hạng người dùng</Nav.Link>
                         </Nav>
 
                         <Nav className='text-mid'>

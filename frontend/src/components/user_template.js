@@ -6,7 +6,7 @@ const UserTemplate = () => {
   return (
     <div>
       <Header />
-      <Outlet /> {/* This renders the nested pages */}
+      <Outlet />
     </div>
   );
 };

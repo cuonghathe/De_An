@@ -211,16 +211,15 @@ export const getUserReview = async (req, res) => {
     const getreview = await reviewDB
       .find({ userId: userId })
       .populate({
-        path: "recipeid", // Populate thông tin từ bảng `recipes`
-        select: "recipename", // Chỉ lấy trường `recipename`
+        path: "recipeid",
+        select: "recipename", 
       })
-      .lean(); // Chuyển kết quả thành object JS thuần
+      .lean();
 
-    // Format lại dữ liệu để giữ cả `recipeid` gốc và thêm `recipename`
     const formattedReviews = getreview.map(review => ({
       ...review, 
-      recipeid: review.recipeid?._id || review.recipeid, // Giữ nguyên ID của công thức
-      recipename: review.recipeid?.recipename || "Không tìm thấy công thức" // Lấy tên công thức
+      recipeid: review.recipeid?._id || review.recipeid,
+      recipename: review.recipeid?.recipename || "Không tìm thấy công thức" 
     }));
 
     res.status(200).json(formattedReviews);
@@ -232,15 +231,143 @@ export const getUserReview = async (req, res) => {
 
 
 export const getUser = async (req, res) => {
-  const{userId} = req.params;
+  const { userId } = req.params;
+
   try {
-    const getuser = await userDB.findOne({ _id: userId })
-    res.status(200).json(getuser)
+    // Fetch user details
+    const user = await userDB.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Fetch all recipes uploaded by the user
+    const userRecipes = await recipeDB.find({ userId });
+
+    // Calculate total recipes
+    const totalRecipes = userRecipes.length;
+
+    // Calculate total reviews and average rating
+    let totalReviews = 0;
+    let sumOfAverageRatings = 0;
+
+    for (const recipe of userRecipes) {
+      const reviews = await reviewDB.find({ recipeid: recipe._id });
+
+      // Add the number of reviews for this recipe to the total
+      totalReviews += reviews.length;
+
+      // Calculate the average rating for this recipe
+      const averageRating =
+        reviews.length > 0
+          ? reviews.reduce((sum, review) => sum + Number(review.rating), 0) / reviews.length
+          : 0;
+
+      // Add the average rating to the sum of average ratings
+      sumOfAverageRatings += averageRating;
+    }
+
+    // Calculate the average rating across all uploaded recipes
+    const averageRatingAcrossRecipes =
+      totalRecipes > 0 ? (sumOfAverageRatings / totalRecipes).toFixed(1) : "0.0";
+
+    // Return user details along with stats
+    res.status(200).json({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      userprofile: user.userprofile,
+      isAdmin: user.isAdmin,
+      tokens: user.tokens,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      totalRecipes,
+      totalReviews,
+      averageRatingAcrossRecipes,
+    });
   } catch (error) {
-    console.log("error", error);
-    res.status(500).json({ error: error })
+    console.error("Error fetching user details:", error);
+    res.status(500).json({ error: "Failed to fetch user details" });
   }
-}
+};
+
+export const updateUser = async (req, res) => {
+  const { userId } = req.params;
+  const { username, email, password } = req.body;
+  const file = req.file ? req.file.path : "";
+
+  try {
+    const user = await userDB.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "Người dùng không tồn tại" });
+    }
+
+    if (username) user.username = username;
+    if (email) user.email = email;
+    if (password) {
+      const hashPassword = await bcryptjs.hash(password, 12);
+      user.password = hashPassword;
+    }
+
+    if (file) {
+      const result = await cloudinary.uploader.upload(file);
+      user.userprofile = result.secure_url;
+    }
+
+    await user.save();
+    return res.status(200).json({ message: "Cập nhật thành công", user });
+
+  } catch (error) {
+    console.error("Lỗi cập nhật:", error);
+    return res.status(500).json({ error: "Lỗi server" });
+  }
+};
+
+
+export const getUserRecipeStats = async (req, res) => {
+  try {
+    const allUsers = await userDB.find();
+
+    const userStats = await Promise.all(
+      allUsers.map(async (user) => {
+        const userRecipes = await recipeDB.find({ userId: user._id });
+
+        const totalRecipes = userRecipes.length;
+
+        let totalReviews = 0;
+        let sumOfAverageRatings = 0;
+
+        for (const recipe of userRecipes) {
+          const reviews = await reviewDB.find({ recipeid: recipe._id });
+
+          totalReviews += reviews.length;
+
+          const averageRating =
+            reviews.length > 0
+              ? reviews.reduce((sum, review) => sum + Number(review.rating), 0) / reviews.length
+              : 0;
+
+          sumOfAverageRatings += averageRating;
+        }
+
+        const averageRatingAcrossRecipes =
+          totalRecipes > 0 ? (sumOfAverageRatings / totalRecipes).toFixed(1) : "0.0";
+
+        return {
+          ...user.toObject(), 
+          totalRecipes,
+          totalReviews,
+          averageRatingAcrossRecipes,
+        };
+      })
+    );
+
+    res.status(200).json(userStats);
+  } catch (error) {
+    console.error("Error fetching all users' recipe stats:", error);
+    res.status(500).json({ error: "Failed to fetch all users' recipe stats" });
+  }
+};
+
 
 
 const userAuthController = {
@@ -248,11 +375,12 @@ const userAuthController = {
   login,
   userVerify,
   forgotpassword,
-  getAllUsers,
   deleteUser,
   getUserRecipe,
   getUserReview,
-  getUser
+  getUser,
+  updateUser,
+  getUserRecipeStats,
 };
 
 export default userAuthController;

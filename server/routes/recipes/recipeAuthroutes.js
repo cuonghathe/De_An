@@ -5,7 +5,7 @@ import recipeAuthController from '../../controllers/recipes/recipeController.js'
 import userAuthenticate from '../../middleware/userAuthenticate.js';
 
 router.post("/create", userAuthenticate, recipeUpload.single("recipeImg"), recipeAuthController.createRecipe);
-router.patch("/update/:recipeid", userAuthenticate, recipeUpload.single("recipeImg"), recipeAuthController.updateRecipe);
+router.put("/update/:recipeid", userAuthenticate, recipeUpload.single("recipeImg"), recipeAuthController.updateRecipe);
 router.delete("/delete/:recipeid", userAuthenticate, recipeAuthController.deleteRecipe);
 router.get("/search/:key",recipeAuthController.searchRecipe)
 router.get('/getRecipes', recipeAuthController.getAllRecipes);

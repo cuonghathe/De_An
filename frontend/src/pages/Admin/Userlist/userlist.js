@@ -59,7 +59,7 @@ const UserList = () => {
           <ListGroup.Item key={users._id} className="d-flex justify-content-between align-items-center">
             <span>
               <strong>{users.username}</strong>
-              <small className="ms-2">| Số lần đăng nhập {users.tokens.length} |</small>
+              <small className="ms-2">| Số lần đăng nhập {users.tokens.length} | Số bài đăng {users.totalRecipes} | Điểm trung bình {users.averageRatingAcrossRecipes}</small>
             </span>
             <div>
               <button className="btn btn-success btn-sm me-2" onClick={ () => handleNav(users._id)} >

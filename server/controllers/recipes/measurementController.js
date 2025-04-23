@@ -1,13 +1,17 @@
 // Thay đổi số lượng nguyên liệu theo số suất ăn mới
-export const adjustMeasurements = (ingredients, currentServings, newServings) => {
-  if (currentServings <= 0 || newServings <= 0) {
-    throw new Error("Số lượng suất ăn phải lớn hơn 0");
+const adjustMeasurements = (ingredients, currentServings, newServings) => {
+  if (typeof ingredients === 'string') {
+    ingredients = JSON.parse(ingredients);
+  }
+
+  if (!Array.isArray(ingredients)) {
+    throw new Error("Ingredients must be an array");
   }
 
   const adjustmentFactor = newServings / currentServings;
   return ingredients.map(ingredient => ({
     ...ingredient,
-    quantity: Math.round(ingredient.quantity * adjustmentFactor * 100) / 100 // Làm tròn 2 số thập phân
+    quantity: Math.round(ingredient.quantity * adjustmentFactor * 100) / 100 // Round to 2 decimal places
   }));
 };
 

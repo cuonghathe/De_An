@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 import Scrolling from '../../api/voiceControl/scrolling';
+import TTS, { stopTTS } from '../../api/voiceControl/TTS';
 import "./Recipe.scss";
 
 const RecipeDetails = () => {
@@ -113,6 +114,16 @@ const RecipeDetails = () => {
         }
     };
 
+    const handleSpeakIngredients = () => {
+        if (!recipe || !recipe.ingredients) return;
+
+        const ingredientsText = recipe.ingredients
+            .map(ingredient => `${ingredient.name}: ${ingredient.quantity} ${ingredient.measurement}`)
+            .join(', ');
+
+        TTS(ingredientsText);
+    };
+
 
     if (!recipe) {
         return <div>Đang tải....</div>;
@@ -144,6 +155,7 @@ const RecipeDetails = () => {
                             changeOpacity={changeOpacity}
                             handleAddServing={() => handleServingsChange(servings + 1)}
                             handleRemoveServing={() => handleServingsChange(servings - 1)}
+                            handleSpeakIngredients={handleSpeakIngredients}
                         />
 
                     </div>
@@ -173,7 +185,14 @@ const RecipeDetails = () => {
             <div className="recipe-ingredients-instructions">
                 <Card className="ingredients-card" ref={ingredientsRef}>
                     <Card.Body>
-                        <h4 className='mt-2'>Nguyên liệu</h4>
+                        <div className="info_box">
+                            <h4 className='mt-2'>Nguyên liệu</h4>
+                            <div className="recipe-ingredients-instructions">
+                                <Button variant="success" size='sm' onClick={handleSpeakIngredients}>Đọc</Button>
+                                <Button variant="danger" size='sm' onClick={stopTTS} >Dừng</Button>
+                            </div>
+                        </div>
+
                         <Form>
                             {adjustedIngredients.map((ingredient, index) => (
                                 <Form.Check
@@ -233,7 +252,6 @@ const RecipeDetails = () => {
                         <Form.Label>Bình luận</Form.Label>
                         <Form.Control
                             as="textarea"
-                            readOnly
                             rows={3}
                             value={newReview.description}
                             onChange={(e) => setNewReview({ ...newReview, description: e.target.value })}
