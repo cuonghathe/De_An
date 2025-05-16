@@ -1,9 +1,9 @@
 import express from 'express';
-import userAuthController from '../../controllers/users/usersControllers.js';
-import userUpload from '../../Config/userConfig/userConfig.js';
 import fs from 'fs';
 import path from 'path';
-import {fileURLToPath} from 'url';
+import { fileURLToPath } from 'url';
+import userUpload from '../../Config/userConfig/userConfig.js';
+import userAuthController from '../../controllers/users/usersControllers.js';
 import userAuthenticate from "../../middleware/userAuthenticate.js";
 
 const router = express.Router();

@@ -80,7 +80,7 @@ const filteredUsers = users
               <th>Ảnh đại diện</th>
               <th>Tên người dùng</th>
               <th>Điểm trung bình</th>
-              <th>Tổng số lượng đánh giá công thức đã đăng</th>
+              <th>Tổng số lượng đánh giá đã nhận</th>
               <th>Số lượng công thức đã đăng</th>
             </tr>
           </thead>

@@ -93,7 +93,7 @@ const Dashboard = () => {
         <div className="recipecard">
           {filteredRecipe.map((recipe) => (
             <Card key={recipe._id} style={{ maxWidth: '21rem', width: "100%", marginBottom: "15px", boxShadow: "0px 2px 20px #cfd8dc", height: "27rem", cursor: "pointer" }}>
-              <Card.Img style={{ width: "100%", height: "13rem" }} variant="top" src={recipe.recipeImg || '/dragondancing_1200x1200.jpg'} />
+              <Card.Img style={{ width: "100%", height: "190px", maxWidth:"334px" }} variant="top" src={recipe.recipeImg || '/dragondancing_1200x1200.jpg'} />
               <Card.Body>
                 <Card.Title>{recipe.recipename} <small style={{ fontweight: "100px" }}>({new Date(recipe.createdAt).toLocaleDateString()})</small></Card.Title>
 

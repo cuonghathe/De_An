@@ -143,6 +143,7 @@ const CreateRecipe = () => {
                       <option value="L">L</option>
                       <option value="ml">ml</option>
                       <option value="cái">cái</option>
+                      <option value="gói">gói</option>
                       <option value="củ">củ</option>
                       <option value="quả">quả</option>
                       <option value="lon">lon</option>
